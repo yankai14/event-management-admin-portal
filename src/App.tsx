@@ -1,26 +1,39 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Router from 'components/router/Router';
+import ApiService from 'utils/ApiService';
+import AuthContext, {AuthContextState, authContextDefaultValue} from 'contexts/AuthContext';
+import { useHistory } from 'react-router-dom';
+import routes from 'constants/routes'
 
-function App() {
+const App = () => {
+  const [authState, setAuthState] = React.useState<AuthContextState>({
+    ...authContextDefaultValue.authState
+  })
+  const history = useHistory();
+
+  React.useEffect(()=>{
+    const { authToken, username} = ApiService.getAuthTokenAndUsernameFromLocalStorage()
+    if (authToken) {
+      setAuthState({
+        authToken: authToken,
+        isAuthenticated: true,
+        username: username
+      })
+
+      if (history.location.pathname === routes.LOGIN) {
+        history.push(routes.HOME)
+      }
+
+    } else {
+      history.push(routes.LOGIN)
+    }
+  }, [history])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <AuthContext.Provider value={{authState, setAuthState}}>
+      <Router isUserAuthenticated={authState.isAuthenticated}/>
+    </AuthContext.Provider>
+  )
 }
 
 export default App;

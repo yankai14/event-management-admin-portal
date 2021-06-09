@@ -2,7 +2,8 @@ import React from 'react';
 import {Route, Switch} from 'react-router-dom';
 import routes from 'constants/routes';
 import LoginPage from 'pages/authentication/LoginPage';
-import HomePage from 'pages/home/HomePage'
+import HomePage from 'pages/home/HomePage';
+import FacilitatorApplicationPage from 'pages/applications/FacilitatorApplicationPage';
 
 
 interface Props {
@@ -27,7 +28,7 @@ const Router = ({isUserAuthenticated}: Props) => {
 
   return (
     <Switch>
-      <Route exact path={routes.HOME} component={HomePage} />
+      <Route exact path={routes.HOME} component={FacilitatorApplicationPage} />
     </Switch>
   )
   

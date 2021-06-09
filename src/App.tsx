@@ -3,7 +3,8 @@ import Router from 'components/router/Router';
 import ApiService from 'utils/ApiService';
 import AuthContext, {AuthContextState, authContextDefaultValue} from 'contexts/AuthContext';
 import { useHistory } from 'react-router-dom';
-import routes from 'constants/routes'
+import { Container } from '@material-ui/core';
+import routes from 'constants/routes';
 
 const App = () => {
   const [authState, setAuthState] = React.useState<AuthContextState>({
@@ -30,9 +31,11 @@ const App = () => {
   }, [history])
 
   return (
-    <AuthContext.Provider value={{authState, setAuthState}}>
-      <Router isUserAuthenticated={authState.isAuthenticated}/>
-    </AuthContext.Provider>
+    <Container maxWidth={false} >
+      <AuthContext.Provider value={{authState, setAuthState}}>
+        <Router isUserAuthenticated={authState.isAuthenticated}/>
+      </AuthContext.Provider>
+    </Container>
   )
 }
 

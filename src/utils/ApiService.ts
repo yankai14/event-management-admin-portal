@@ -1,7 +1,9 @@
-import axios from 'axios'
-import apiRoutes from 'constants/apiRoutes'
-import localStorageKey from 'constants/localstorage'
+import axios from 'axios';
+import apiRoutes from 'constants/apiRoutes';
+import localStorageKey from 'constants/localstorage';
 import { StatusCodes } from 'http-status-codes';
+import { ListResponseEnrollment, EnrollmentQueryParams, EnrollmentPayload } from 'utils/ApiServiceTypings'
+
 
 // Definitions for ApiService
 const coreApiBaseUrl = "http://127.0.0.1:8000/"
@@ -80,6 +82,72 @@ export default class ApiService {
             console.error(err)
         }
     }
+    /**
+     * Method for retrieving list of Enrollments
+     * @param params
+     * @returns 
+     */
+    static async getEnrollment(params?:EnrollmentQueryParams) {
+        const { authToken } = ApiService.getAuthTokenAndUsernameFromLocalStorage();
+        if (authToken) {
+            ApiService.setAuthTokenHeader(authToken)
+        } else {
+            ApiService.errorMessage()
+            throw new Error('User not logged in')
+        }
+
+        try {
+            const response = await coreApi.get<ListResponseEnrollment>(
+                apiRoutes.ENROLLMENT,
+                {
+                    params: params
+                }
+            )
+            //TODO: Add pagination
+            const { results } = response.data;
+            return results
+
+        } catch(error) {
+            if (error.response) {
+                if (error.response.status === StatusCodes.UNAUTHORIZED) {
+                    ApiService.errorMessage("You are unauthorised to view this page")
+                } else if (error.response.status >= 500) {
+                    console.log(`Error Status Code: ${error.response.status} at ${apiRoutes.LOGIN}`)
+                    console.log(error.message)
+                    ApiService.errorMessage("Backend Error, please contact the administrator")
+                }
+            } else {
+                ApiService.errorMessage();
+            }
+        }
+    }
+
+
+    static async updateEnrollment(payload: EnrollmentPayload) {
+        const { authToken } = ApiService.getAuthTokenAndUsernameFromLocalStorage();
+        if (authToken) {
+            ApiService.setAuthTokenHeader(authToken)
+        } else {
+            ApiService.errorMessage()
+            throw new Error('User not logged in')
+        }
+        try {
+            await coreApi.put(`${apiRoutes.ENROLLMENT}/${payload.id}`, payload);
+        } catch(error) {
+            if (error.response) {
+                if (error.response.status === StatusCodes.UNAUTHORIZED) {
+                    ApiService.errorMessage("You are unauthorised to view this page")
+                } else if (error.response.status >= 500) {
+                    console.log(`Error Status Code: ${error.response.status} at ${apiRoutes.LOGIN}`)
+                    console.log(error.message)
+                    ApiService.errorMessage("Backend Error, please contact the administrator")
+                }
+            } else {
+                ApiService.errorMessage();
+            }
+        }
+    }
+
     /**
      * Helper method for alerting user of errors
      * @param errorMessage 

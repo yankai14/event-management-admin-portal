@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import clsx from 'clsx';
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -13,9 +14,14 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-const drawerWidth = 240;
+import HomeIcon from '@material-ui/icons/Home';
+import PersonIcon from '@material-ui/icons/Person';
+import PeopleIcon from '@material-ui/icons/People';
+import ClassIcon from '@material-ui/icons/Class';
+import routes from 'constants/routes';
+
+
+const drawerWidth = 300;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -125,22 +131,25 @@ const Navigation = () => {
                 </div>
                 <Divider />
                     <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
+                      <ListItem button key="Home" component={Link} to={routes.HOME}>
+                        <ListItemIcon><HomeIcon /></ListItemIcon>
+                        <ListItemText primary="Home" />
+                      </ListItem>
+                      <ListItem button key="Facilitator Applications" component={Link} to={routes.FACILITATOR_APPLICATION}>
+                        <ListItemIcon><PersonIcon /></ListItemIcon>
+                        <ListItemText primary="Facilitator Applications" />
+                      </ListItem>
+                      <ListItem button key="Student Applications">
+                        <ListItemIcon><PeopleIcon /></ListItemIcon>
+                        <ListItemText primary="Student Applications" />
+                      </ListItem>
+                      <ListItem button key="Events">
+                        <ListItemIcon><ClassIcon /></ListItemIcon>
+                        <ListItemText primary="Events" />
+                      </ListItem>
                     </List>
                 <Divider />
-                <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem button key={text}>
-                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                    <ListItemText primary={text} />
-                    </ListItem>
-                ))}
-                </List>
+                
             </Drawer>
         </>
     )

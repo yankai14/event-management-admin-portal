@@ -28,7 +28,8 @@ const Router = ({isUserAuthenticated}: Props) => {
 
   return (
     <Switch>
-      <Route exact path={routes.HOME} component={FacilitatorApplicationPage} />
+      <Route exact path={routes.HOME} component={HomePage} />
+      <Route exact path={routes.FACILITATOR_APPLICATION} component={FacilitatorApplicationPage} />
     </Switch>
   )
   

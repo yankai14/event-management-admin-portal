@@ -143,7 +143,7 @@ const Navigation = () => {
                         <ListItemIcon><PeopleIcon /></ListItemIcon>
                         <ListItemText primary="Student Applications" />
                       </ListItem>
-                      <ListItem button key="Events">
+                      <ListItem button key="Events" component={Link} to={routes.EVENT}>
                         <ListItemIcon><ClassIcon /></ListItemIcon>
                         <ListItemText primary="Events" />
                       </ListItem>

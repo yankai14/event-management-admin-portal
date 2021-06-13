@@ -1,11 +1,13 @@
 interface ApiRoutes {
     LOGIN: string,
-    ENROLLMENT: string
+    ENROLLMENT: string,
+    EVENT: string
 }
 
 const apiRoutes: ApiRoutes = {
     LOGIN: '/auth/login',
-    ENROLLMENT: '/enrollment'
+    ENROLLMENT: '/enrollment',
+    EVENT: '/event'
 }
 
 export default apiRoutes

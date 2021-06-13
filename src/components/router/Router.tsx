@@ -4,6 +4,8 @@ import routes from 'constants/routes';
 import LoginPage from 'pages/authentication/LoginPage';
 import HomePage from 'pages/home/HomePage';
 import FacilitatorApplicationPage from 'pages/applications/FacilitatorApplicationPage';
+import EventPage from 'pages/events/EventPage';
+import CreateEventPage from 'pages/events/CreateEventPage';
 
 
 interface Props {
@@ -30,9 +32,10 @@ const Router = ({isUserAuthenticated}: Props) => {
     <Switch>
       <Route exact path={routes.HOME} component={HomePage} />
       <Route exact path={routes.FACILITATOR_APPLICATION} component={FacilitatorApplicationPage} />
+      <Route exact path={routes.EVENT} component={EventPage} />
+      <Route exact path={routes.CREATE_EVENT} component={CreateEventPage} />
     </Switch>
   )
-  
 }
 
 export default Router;

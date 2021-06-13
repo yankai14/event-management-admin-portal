@@ -2,7 +2,14 @@ import axios from 'axios';
 import apiRoutes from 'constants/apiRoutes';
 import localStorageKey from 'constants/localstorage';
 import { StatusCodes } from 'http-status-codes';
-import { ListResponseEnrollment, EnrollmentQueryParams, EnrollmentPayload } from 'utils/ApiServiceTypings'
+import { 
+    ListResponseEnrollment, 
+    EnrollmentQueryParams, 
+    EnrollmentPayload,
+    ListResponseEvent,
+    CreateEventInput,
+    CreateEventOutput
+} from 'utils/ApiServiceTypings'
 
 
 // Definitions for ApiService
@@ -88,14 +95,7 @@ export default class ApiService {
      * @returns 
      */
     static async getEnrollment(params?:EnrollmentQueryParams) {
-        const { authToken } = ApiService.getAuthTokenAndUsernameFromLocalStorage();
-        if (authToken) {
-            ApiService.setAuthTokenHeader(authToken)
-        } else {
-            ApiService.errorMessage()
-            throw new Error('User not logged in')
-        }
-
+        ApiService.userIsLoggedIn()
         try {
             const response = await coreApi.get<ListResponseEnrollment>(
                 apiRoutes.ENROLLMENT,
@@ -122,15 +122,12 @@ export default class ApiService {
         }
     }
 
-
+    /**
+     * Method for updating enrollment object. Have to contain all required fields
+     * @param payload 
+     */
     static async updateEnrollment(payload: EnrollmentPayload) {
-        const { authToken } = ApiService.getAuthTokenAndUsernameFromLocalStorage();
-        if (authToken) {
-            ApiService.setAuthTokenHeader(authToken)
-        } else {
-            ApiService.errorMessage()
-            throw new Error('User not logged in')
-        }
+        ApiService.userIsLoggedIn()
         try {
             await coreApi.put(`${apiRoutes.ENROLLMENT}/${payload.id}`, payload);
         } catch(error) {
@@ -145,6 +142,63 @@ export default class ApiService {
             } else {
                 ApiService.errorMessage();
             }
+        }
+    }
+    /**
+     * Method to get a list of event objects
+     * @returns 
+     */
+    static async getEvent() {
+        ApiService.userIsLoggedIn()
+        try {
+            const response = await coreApi.get<ListResponseEvent>(apiRoutes.EVENT)
+            const { results } = response.data;
+            return results
+        } catch(error) {
+            if (error.response) {
+                if (error.response.status === StatusCodes.UNAUTHORIZED) {
+                    ApiService.errorMessage("You are unauthorised to view this page");
+                } else if (error.response.status >= 500) {
+                    console.log(`Error Status Code: ${error.response.status} at ${apiRoutes.LOGIN}`);
+                    console.log(error.message);
+                    ApiService.errorMessage("Backend Error, please contact the administrator");
+                }
+            } else {
+                ApiService.errorMessage();
+            }
+        }
+    }
+
+    static async createEvent(payload: CreateEventInput) {
+        ApiService.userIsLoggedIn()
+        try {
+            const results = await coreApi.post<CreateEventOutput>(apiRoutes.EVENT, payload)
+            return results
+        } catch(error) {
+            if (error.response) {
+                if (error.response.status === StatusCodes.UNAUTHORIZED) {
+                    ApiService.errorMessage("You are unauthorised to view this page");
+                } else if (error.response.status >= 500) {
+                    console.log(`Error Status Code: ${error.response.status} at ${apiRoutes.LOGIN}`);
+                    console.log(error.message);
+                    ApiService.errorMessage("Backend Error, please contact the administrator");
+                }
+            } else {
+                ApiService.errorMessage();
+            }
+        }
+    }
+
+    /**
+     * Helper method to check if user is logged in and set the AuthToken header
+     */
+    static userIsLoggedIn() {
+        const { authToken } = ApiService.getAuthTokenAndUsernameFromLocalStorage();
+        if (authToken) {
+            ApiService.setAuthTokenHeader(authToken)
+        } else {
+            ApiService.errorMessage();
+            throw new Error('User not logged in');
         }
     }
 

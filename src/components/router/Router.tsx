@@ -15,8 +15,6 @@ interface Props {
 /**
  * Stateless component responsible for rendering public or private routes.
  * If user is authenticated, render private routes, otherwise render public routes.
- * Small note - there is a "/intro" route (not present in any navigation), which shows a simple textual and graphical overview
- * of what SSI is.
  * */
 const Router = ({isUserAuthenticated}: Props) => {
   // render public routes
@@ -34,6 +32,7 @@ const Router = ({isUserAuthenticated}: Props) => {
       <Route exact path={routes.FACILITATOR_APPLICATION} component={FacilitatorApplicationPage} />
       <Route exact path={routes.EVENT} component={EventPage} />
       <Route exact path={routes.CREATE_EVENT} component={CreateEventPage} />
+      <Route path={`${routes.EVENT_INSTANCE}/:eventCode`} />
     </Switch>
   )
 }

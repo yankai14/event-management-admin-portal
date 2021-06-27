@@ -9,7 +9,7 @@ const FacilitatorApplicationPage = () => {
     return (
         <Box my={5}>
             <Grid container justify="center" spacing={7}>
-                <h2>Facilitators Applications</h2>
+                <h2>Applications Section</h2>
                 <Grid item 
                     md={11}
                     xs={12}>
@@ -27,6 +27,5 @@ const FacilitatorApplicationPage = () => {
     )
    
 }
-
 
 export default FacilitatorApplicationPage;

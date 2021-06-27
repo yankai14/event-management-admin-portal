@@ -3,9 +3,11 @@ import {Route, Switch} from 'react-router-dom';
 import routes from 'constants/routes';
 import LoginPage from 'pages/authentication/LoginPage';
 import HomePage from 'pages/home/HomePage';
-import FacilitatorApplicationPage from 'pages/applications/FacilitatorApplicationPage';
+import ApplicationPage from 'pages/applications/ApplicationPage';
 import EventPage from 'pages/events/EventPage';
 import CreateEventPage from 'pages/events/CreateEventPage';
+import EventInstancePage from 'pages/event-instance/EventInstancePage';
+import CreateEventInstancePage from 'pages/event-instance/CreateEventInstancePage';
 
 
 interface Props {
@@ -29,10 +31,11 @@ const Router = ({isUserAuthenticated}: Props) => {
   return (
     <Switch>
       <Route exact path={routes.HOME} component={HomePage} />
-      <Route exact path={routes.FACILITATOR_APPLICATION} component={FacilitatorApplicationPage} />
+      <Route exact path={routes.APPLICATION} component={ApplicationPage} />
       <Route exact path={routes.EVENT} component={EventPage} />
       <Route exact path={routes.CREATE_EVENT} component={CreateEventPage} />
-      <Route path={`${routes.EVENT_INSTANCE}/:eventCode`} />
+      <Route path={`${routes.EVENT_INSTANCE}/:eventCode`} component={EventInstancePage} />
+      <Route path={`${routes.CREATE_EVENT_INSTANCE}/:eventCode`} component={CreateEventInstancePage} />
     </Switch>
   )
 }

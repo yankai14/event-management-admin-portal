@@ -16,7 +16,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from '@material-ui/icons/Home';
 import PersonIcon from '@material-ui/icons/Person';
-import PeopleIcon from '@material-ui/icons/People';
 import ClassIcon from '@material-ui/icons/Class';
 import routes from 'constants/routes';
 
@@ -82,7 +81,11 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const Navigation = () => {
+interface IProps {
+  isUserAuthenticated: Boolean
+}
+
+const Navigation = (props: IProps) => {
     const classes = useStyles()
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -130,24 +133,28 @@ const Navigation = () => {
                     </IconButton>
                 </div>
                 <Divider />
+                  { props.isUserAuthenticated ? 
                     <List>
                       <ListItem button key="Home" component={Link} to={routes.HOME}>
                         <ListItemIcon><HomeIcon /></ListItemIcon>
                         <ListItemText primary="Home" />
                       </ListItem>
-                      <ListItem button key="Facilitator Applications" component={Link} to={routes.FACILITATOR_APPLICATION}>
+                      <ListItem button key="Applications" component={Link} to={routes.APPLICATION}>
                         <ListItemIcon><PersonIcon /></ListItemIcon>
-                        <ListItemText primary="Facilitator Applications" />
-                      </ListItem>
-                      <ListItem button key="Student Applications">
-                        <ListItemIcon><PeopleIcon /></ListItemIcon>
-                        <ListItemText primary="Student Applications" />
+                        <ListItemText primary="Applications" />
                       </ListItem>
                       <ListItem button key="Events" component={Link} to={routes.EVENT}>
                         <ListItemIcon><ClassIcon /></ListItemIcon>
                         <ListItemText primary="Events" />
                       </ListItem>
+                    </List> :
+                    <List>
+                      <ListItem button key="Login" component={Link} to={routes.LOGIN}>
+                        <ListItemIcon><HomeIcon /></ListItemIcon>
+                        <ListItemText primary="Login" />
+                      </ListItem>
                     </List>
+                  }
                 <Divider />
                 
             </Drawer>

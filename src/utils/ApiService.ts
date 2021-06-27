@@ -8,7 +8,11 @@ import {
     EnrollmentPayload,
     ListResponseEvent,
     CreateEventInput,
-    CreateEventOutput
+    CreateEventOutput,
+    GetEventInstanceParams,
+    GetEventInstanceOutput,
+    EventInstance,
+    UpdateEventInstanceInput
 } from 'utils/ApiServiceTypings'
 
 
@@ -112,7 +116,7 @@ export default class ApiService {
                 if (error.response.status === StatusCodes.UNAUTHORIZED) {
                     ApiService.errorMessage("You are unauthorised to view this page")
                 } else if (error.response.status >= 500) {
-                    console.log(`Error Status Code: ${error.response.status} at ${apiRoutes.LOGIN}`)
+                    console.log(`Error Status Code: ${error.response.status} at ${apiRoutes.ENROLLMENT}`)
                     console.log(error.message)
                     ApiService.errorMessage("Backend Error, please contact the administrator")
                 }
@@ -135,7 +139,7 @@ export default class ApiService {
                 if (error.response.status === StatusCodes.UNAUTHORIZED) {
                     ApiService.errorMessage("You are unauthorised to view this page")
                 } else if (error.response.status >= 500) {
-                    console.log(`Error Status Code: ${error.response.status} at ${apiRoutes.LOGIN}`)
+                    console.log(`Error Status Code: ${error.response.status} at ${apiRoutes.ENROLLMENT}`)
                     console.log(error.message)
                     ApiService.errorMessage("Backend Error, please contact the administrator")
                 }
@@ -159,7 +163,7 @@ export default class ApiService {
                 if (error.response.status === StatusCodes.UNAUTHORIZED) {
                     ApiService.errorMessage("You are unauthorised to view this page");
                 } else if (error.response.status >= 500) {
-                    console.log(`Error Status Code: ${error.response.status} at ${apiRoutes.LOGIN}`);
+                    console.log(`Error Status Code: ${error.response.status} at ${apiRoutes.EVENT}`);
                     console.log(error.message);
                     ApiService.errorMessage("Backend Error, please contact the administrator");
                 }
@@ -168,7 +172,11 @@ export default class ApiService {
             }
         }
     }
-
+    /**
+     * Method to create event
+     * @param payload 
+     * @returns 
+     */
     static async createEvent(payload: CreateEventInput) {
         ApiService.userIsLoggedIn()
         try {
@@ -179,7 +187,87 @@ export default class ApiService {
                 if (error.response.status === StatusCodes.UNAUTHORIZED) {
                     ApiService.errorMessage("You are unauthorised to view this page");
                 } else if (error.response.status >= 500) {
-                    console.log(`Error Status Code: ${error.response.status} at ${apiRoutes.LOGIN}`);
+                    console.log(`Error Status Code: ${error.response.status} at ${apiRoutes.EVENT}`);
+                    console.log(error.message);
+                    ApiService.errorMessage("Backend Error, please contact the administrator");
+                }
+            } else {
+                ApiService.errorMessage();
+            }
+        }
+    }
+    /**
+     * Method to get a list of event instance
+     * @param params 
+     * @returns 
+     */
+    static async getEventInstance(params?: GetEventInstanceParams) {
+        ApiService.userIsLoggedIn()
+        try {
+            const response = await coreApi.get<GetEventInstanceOutput>(
+                apiRoutes.EVENT_INSTANCE, {
+                params: params
+            })
+            const { results } = response.data;
+            return results
+        } catch(error) {
+            if (error.response) {
+                if (error.response.status === StatusCodes.UNAUTHORIZED) {
+                    ApiService.errorMessage("You are unauthorised to view this page");
+                } else if (error.response.status >= 500) {
+                    console.log(`Error Status Code: ${error.response.status} at ${apiRoutes.EVENT_INSTANCE}`);
+                    console.log(error.message);
+                    ApiService.errorMessage("Backend Error, please contact the administrator");
+                }
+            } else {
+                ApiService.errorMessage();
+            }
+        }
+    }
+
+    static async createEventInstance(payload: UpdateEventInstanceInput) {
+        ApiService.userIsLoggedIn()
+        try {
+            const response = coreApi.post<EventInstance>(
+                apiRoutes.EVENT_INSTANCE, 
+                payload
+            )
+            return response
+        } catch(error) {
+            if (error.response) {
+                if (error.response.status === StatusCodes.UNAUTHORIZED) {
+                    ApiService.errorMessage("You are unauthorised to view this page");
+                } else if (error.response.status === StatusCodes.NOT_FOUND) {
+                    console.log()
+                    ApiService.errorMessage("An error has occur: Invalid eventInstanceCode. Please contact the administrator")
+                } else if (error.response.status >= 500) {
+                    console.log(`Error Status Code: ${error.response.status} at apiRoutes.EVENT_INSTANCE`);
+                    console.log(error.message);
+                    ApiService.errorMessage("Backend Error, please contact the administrator");
+                }
+            } else {
+                ApiService.errorMessage();
+            }
+        }
+    }
+
+    static async updateEventInstance(eventInstanceCode: string, payload: EventInstance) {
+        ApiService.userIsLoggedIn()
+        try {
+            const response = coreApi.put<EventInstance>(
+                `${apiRoutes.EVENT_INSTANCE}/${eventInstanceCode}`, 
+                payload
+            )
+            return response
+        } catch(error) {
+            if (error.response) {
+                if (error.response.status === StatusCodes.UNAUTHORIZED) {
+                    ApiService.errorMessage("You are unauthorised to view this page");
+                } else if (error.response.status === StatusCodes.NOT_FOUND) {
+                    console.log()
+                    ApiService.errorMessage("An error has occur: Invalid eventInstanceCode. Please contact the administrator")
+                } else if (error.response.status >= 500) {
+                    console.log(`Error Status Code: ${error.response.status} at ${apiRoutes.EVENT_INSTANCE}/${eventInstanceCode}`);
                     console.log(error.message);
                     ApiService.errorMessage("Backend Error, please contact the administrator");
                 }

@@ -9,7 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import PendingApplicationRow from 'components/application/pending/PendingApplicationRow';
 import ApiService from 'utils/ApiService';
-import { eventRole, enrollmentStatus } from 'constants/api';
+import { enrollmentStatus } from 'constants/api';
 import { EnrollmentResult } from 'utils/ApiServiceTypings';
 
 
@@ -42,7 +42,6 @@ const PendingApplicationTable = () => {
         const fetchDataHelper = async ()=>{
             try {
                 const data = await ApiService.getEnrollment({
-                    role: eventRole.FACILITATOR,
                     status: enrollmentStatus.PENDING
                 })
                 return data
@@ -71,7 +70,8 @@ const PendingApplicationTable = () => {
                     <StyledTableCell align="center">Name</StyledTableCell>
                     <StyledTableCell align="center">Email</StyledTableCell>
                     <StyledTableCell align="center">Username</StyledTableCell>
-                    <StyledTableCell align="center">Class</StyledTableCell>
+                    <StyledTableCell align="center">Role</StyledTableCell>
+                    <StyledTableCell align="center">Event Instance</StyledTableCell>
                     <StyledTableCell align="center">Status</StyledTableCell>
                     <StyledTableCell align="center">Approve</StyledTableCell>
                     <StyledTableCell align="center">Delete</StyledTableCell>

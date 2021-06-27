@@ -50,7 +50,7 @@ const EventCard = (props: IProps) => {
                 <Divider />
                 <Box p={2}>
                     <Grid container spacing={2} className={classes.boxItems}>
-                        <Link href={routes.HOME}>
+                        <Link href={`${routes.EVENT_INSTANCE}/${props.event.eventCode}`}>
                             See Event Instances
                         </Link>
                     </Grid>

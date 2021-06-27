@@ -16,8 +16,8 @@ export interface EnrollmentResult {
 }
 
 export interface EnrollmentQueryParams {
-    role: number
-    status: number
+    role?: number
+    status?: number
     eventInstance?: number
 }
 
@@ -61,4 +61,38 @@ export interface CreateEventOutput {
     eventCode: string
     name: string
     description: string
+}
+
+export interface GetEventInstanceParams {
+    event?: string
+}
+
+export interface EventInstance {
+    id: number
+    event: string
+    eventInstanceCode: string
+    startDate: string
+    endDate: string
+    location: string
+    dates: string[]
+    fee: string
+    isCompleted: boolean
+}
+
+export interface GetEventInstanceOutput {
+    count: number
+    next: string
+    previous: string
+    results: EventInstance[]
+}
+
+export interface UpdateEventInstanceInput {
+    eventCode: string
+    eventInstanceCode: string
+    startDate: string
+    endDate: string
+    location: string
+    dates: string[]
+    fee: string
+    isCompleted: boolean
 }

@@ -3,7 +3,7 @@ import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import { EnrollmentResult } from 'utils/ApiServiceTypings';
-import { enrollmentStatus } from 'constants/api';
+import { enrollmentStatus, eventRole } from 'constants/api';
 import Button from '@material-ui/core/Button';
 import ApiService from 'utils/ApiService';
 
@@ -69,6 +69,22 @@ const PendingApplicationRow = (props: IProps) => {
     window.location.reload();
   }
 
+  const getRole = ()=>{
+    if (props.application.role === eventRole.PARTICIPANT) {
+      return "Participant"
+    } else if (props.application.role === eventRole.FACILITATOR) {
+      return "Facilitator"
+    } else if (props.application.role === eventRole.COORDINATOR) {
+      return "Coordinator"
+    } else if (props.application.role === eventRole.EVENT_ADMIN) {
+      return "Event Admin"
+    } else if (props.application.role === eventRole.LEAD) {
+      return "Lead"
+    } else {
+      return "Unknown"
+    }
+  }
+
   return (
     <>
       <StyledTableRow key={props.application.id}>
@@ -76,6 +92,7 @@ const PendingApplicationRow = (props: IProps) => {
         <StyledTableCell align="center">{`${props.application.user.first_name} ${props.application.user.last_name}`}</StyledTableCell>
         <StyledTableCell align="center">{props.application.user.email}</StyledTableCell>
         <StyledTableCell align="center">{props.application.user.username}</StyledTableCell>
+        <StyledTableCell align="center">{getRole()}</StyledTableCell>
         <StyledTableCell align="center">{props.application.eventInstance}</StyledTableCell>
         <StyledTableCell align="center">{displayStatusHelper()}</StyledTableCell>
         <StyledTableCell align="center">

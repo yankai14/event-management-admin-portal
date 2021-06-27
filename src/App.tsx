@@ -50,7 +50,7 @@ const App = () => {
     <div>
       <CssBaseline />
       <AuthContext.Provider value={{authState, setAuthState}}>
-        <Navigation />
+        <Navigation isUserAuthenticated={authState.isAuthenticated}/>
         <div className={classes.drawerHeader} />
         <Container maxWidth={false} >
             <Router isUserAuthenticated={authState.isAuthenticated}/>

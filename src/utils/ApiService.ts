@@ -18,7 +18,7 @@ import { config } from 'dotenv'
 
 // Definitions for ApiService
 config()
-const coreApiBaseUrl = process.env.API_BASE_URL
+const coreApiBaseUrl = 'https://ald-event-backend.herokuapp.com/'
 
 export const coreApi = axios.create({
   baseURL: coreApiBaseUrl,

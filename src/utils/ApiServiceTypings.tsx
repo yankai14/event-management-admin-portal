@@ -5,23 +5,23 @@ export interface User {
     last_name: string
 }
 
-export interface EnrollmentResult {
+export interface Enrollment {
     id: number
     user: User
-    eventInstance: string
+    eventInstance: EventInstance
     role: number
     status: number
     paymentId: string
     paymentPlatform: string
 }
 
-export interface EnrollmentQueryParams {
+export interface GetListEnrollmentQueryParams {
     role?: number
     status?: number
     eventInstance?: number
 }
 
-export interface EnrollmentPayload {
+export interface EnrollmentInput {
     id: number
     username: string
     eventInstanceCode: string
@@ -29,25 +29,25 @@ export interface EnrollmentPayload {
     status: number
 }
 
-export interface ListResponseEnrollment {
+export interface GetListEnrollmentOutput {
     count: number
     next: string
     previous: string
-    results: EnrollmentResult[]
+    results: Enrollment[]
 }
 
-export interface EventResult {
+export interface Event {
     id: number
     eventCode: string
     name: string
     description: string
 }
 
-export interface ListResponseEvent {
+export interface GetListEventOutput {
     count: number
     next: string
     previous: string
-    results: EventResult[]
+    results: Event[]
 }
 
 export interface CreateEventInput {
@@ -77,6 +77,7 @@ export interface EventInstance {
     dates: string[]
     fee: string
     isCompleted: boolean
+    vacancy: number
 }
 
 export interface GetEventInstanceOutput {
@@ -95,4 +96,5 @@ export interface UpdateEventInstanceInput {
     dates: string[]
     fee: string
     isCompleted: boolean
+    vacancy: number
 }

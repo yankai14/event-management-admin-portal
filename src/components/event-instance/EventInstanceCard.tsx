@@ -58,6 +58,9 @@ const EventInstanceCard = (props: IProps) => {
                 <Typography align="center" color="textPrimary" variant="body1">
                     Completed: {props.eventInstance.isCompleted.toString()}
                 </Typography>
+                <Typography align="center" color="textPrimary" variant="body1">
+                    Vacancies: {props.eventInstance.vacancy}
+                </Typography>
             </CardContent>
             <div>
                 <Divider />

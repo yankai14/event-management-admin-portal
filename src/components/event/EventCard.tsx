@@ -9,7 +9,7 @@ import {
   Link
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { EventResult } from 'utils/ApiServiceTypings';
+import { Event } from 'utils/ApiServiceTypings';
 import routes from 'constants/routes'
 
 const useStyles = makeStyles({
@@ -27,7 +27,7 @@ const useStyles = makeStyles({
 });
 
 interface IProps {
-    event: EventResult
+    event: Event
 }
 
 const EventCard = (props: IProps) => {

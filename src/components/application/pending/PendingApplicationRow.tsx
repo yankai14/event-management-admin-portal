@@ -2,7 +2,7 @@ import React from 'react';
 import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-import { EnrollmentResult } from 'utils/ApiServiceTypings';
+import { Enrollment } from 'utils/ApiServiceTypings';
 import { enrollmentStatus, eventRole } from 'constants/api';
 import Button from '@material-ui/core/Button';
 import ApiService from 'utils/ApiService';
@@ -33,7 +33,7 @@ const StyledTableRow = withStyles((theme: Theme) =>
 )(TableRow);
 
 interface IProps {
-  application: EnrollmentResult,
+  application: Enrollment,
 }
 
 const PendingApplicationRow = (props: IProps) => {
@@ -49,7 +49,7 @@ const PendingApplicationRow = (props: IProps) => {
     const data = {
       id: props.application.id,
       username: props.application.user.username,
-      eventInstanceCode: props.application.eventInstance,
+      eventInstanceCode: props.application.eventInstance.eventInstanceCode,
       role: props.application.role,
       status: enrollmentStatus.ENROLLED
     }
@@ -61,7 +61,7 @@ const PendingApplicationRow = (props: IProps) => {
     const data = {
       id: props.application.id,
       username: props.application.user.username,
-      eventInstanceCode: props.application.eventInstance,
+      eventInstanceCode: props.application.eventInstance.eventInstanceCode,
       role: props.application.role,
       status: enrollmentStatus.REJECTED
     }
@@ -93,7 +93,7 @@ const PendingApplicationRow = (props: IProps) => {
         <StyledTableCell align="center">{props.application.user.email}</StyledTableCell>
         <StyledTableCell align="center">{props.application.user.username}</StyledTableCell>
         <StyledTableCell align="center">{getRole()}</StyledTableCell>
-        <StyledTableCell align="center">{props.application.eventInstance}</StyledTableCell>
+        <StyledTableCell align="center">{props.application.eventInstance.eventInstanceCode}</StyledTableCell>
         <StyledTableCell align="center">{displayStatusHelper()}</StyledTableCell>
         <StyledTableCell align="center">
           <Button variant="contained" color="primary" onClick={approve}>

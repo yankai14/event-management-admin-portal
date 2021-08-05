@@ -42,7 +42,8 @@ const CreateEventForm = () => {
     location: '',
     dates: [],
     fee: '',
-    isCompleted: false
+    isCompleted: false,
+    vacancy: 10
   })
 
   const handleChangeDates = (index: number, value: string) => {
@@ -132,12 +133,27 @@ const CreateEventForm = () => {
            <TextField
               autoFocus
               margin="dense"
-              id="eventInstanceCode"
+              id="Location"
               label="Location"
               type="text"
               onChange={event=>setEventInstance(prevState => ({
                 ...prevState,
                 location: event.target.value
+              }))}
+              fullWidth
+              required
+            />
+        </Grid>
+        <Grid item xs={12} sm={12}>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="vacancy"
+              label="Vacancy"
+              type="number"
+              onChange={event=>setEventInstance(prevState => ({
+                ...prevState,
+                vacancy: Number.parseInt(event.target.value)
               }))}
               fullWidth
               required

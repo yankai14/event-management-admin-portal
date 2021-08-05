@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ApiService from 'utils/ApiService';
-import { EventResult } from 'utils/ApiServiceTypings';
+import { Event } from 'utils/ApiServiceTypings';
 import EventCard from 'components/event/EventCard';
 import { useHistory } from 'react-router';
 import routes from 'constants/routes';
@@ -27,7 +27,7 @@ const useStyles = makeStyles({
 const EventPage = () => {
     const classes = useStyles();
     const history = useHistory();
-    const [ events, setEvents ] = React.useState<EventResult[]>([]);
+    const [ events, setEvents ] = React.useState<Event[]>([]);
 
     React.useEffect(()=>{
         const fetchDataHelper = async ()=>{

@@ -1,10 +1,10 @@
 import React from 'react';
-import { EnrollmentPayload } from 'utils/ApiServiceTypings';
+import { EnrollmentInput } from 'utils/ApiServiceTypings';
 
 
 export interface ApplicationContextProperties {
-    enrollmentUpdates: EnrollmentPayload[],
-    setEnrollmentUpdates: React.Dispatch<React.SetStateAction<EnrollmentPayload[]>>
+    enrollmentUpdates: EnrollmentInput[],
+    setEnrollmentUpdates: React.Dispatch<React.SetStateAction<EnrollmentInput[]>>
 }
 
 export const applicationContextDefaultValue: ApplicationContextProperties = {

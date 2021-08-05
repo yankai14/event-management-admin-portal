@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import PendingApplicationRow from 'components/application/pending/PendingApplicationRow';
 import ApiService from 'utils/ApiService';
 import { enrollmentStatus } from 'constants/api';
-import { EnrollmentResult } from 'utils/ApiServiceTypings';
+import { Enrollment } from 'utils/ApiServiceTypings';
 
 
 const StyledTableCell = withStyles((theme: Theme) =>
@@ -36,7 +36,7 @@ const useStyles = makeStyles({
 
 const PendingApplicationTable = () => {
     const classes = useStyles();
-    const [ pendingApplications, setPendingApplications ] = React.useState<EnrollmentResult[]>([]);
+    const [ pendingApplications, setPendingApplications ] = React.useState<Enrollment[]>([]);
 
     React.useEffect(()=>{
         const fetchDataHelper = async ()=>{

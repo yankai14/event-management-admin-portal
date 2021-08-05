@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import EnrolledApplicationRow from 'components/application/enrolled/EnrolledApplicationRow';
 import ApiService from 'utils/ApiService';
 import { enrollmentStatus } from 'constants/api';
-import { EnrollmentResult } from 'utils/ApiServiceTypings';
+import { Enrollment } from 'utils/ApiServiceTypings';
 
 
 const StyledTableCell = withStyles((theme: Theme) =>
@@ -36,7 +36,7 @@ const useStyles = makeStyles({
 
 const EnrolledApplicationTable = () => {
     const classes = useStyles();
-    const [ enrolledApplications, setEnrolledApplications ] = React.useState<EnrollmentResult[]>([])
+    const [ enrolledApplications, setEnrolledApplications ] = React.useState<Enrollment[]>([])
 
     React.useEffect(()=>{
         const fetchDataHelper = async ()=>{
@@ -73,8 +73,8 @@ const EnrolledApplicationTable = () => {
                     <StyledTableCell align="center">Role</StyledTableCell>
                     <StyledTableCell align="center">Event Instance</StyledTableCell>
                     <StyledTableCell align="center">Status</StyledTableCell>
+                    <StyledTableCell align="center">Reject</StyledTableCell>
                     <StyledTableCell align="center">Revert</StyledTableCell>
-                    <StyledTableCell align="center">Approve</StyledTableCell>
                 </TableRow>
                 </TableHead>
                 <TableBody>

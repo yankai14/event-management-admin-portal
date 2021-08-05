@@ -10,7 +10,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { EventInstance } from 'utils/ApiServiceTypings';
 import moment from 'moment'
 import ApiService from 'utils/ApiService';
-import { Grid, IconButton } from '@material-ui/core';
+import { FormControlLabel, Grid, IconButton, Switch } from '@material-ui/core';
 
 interface IProps {
   eventInstance: EventInstance
@@ -109,6 +109,36 @@ const UpdateEventInstanceModal = (props: IProps) => {
             <TextField
               autoFocus
               margin="dense"
+              id="Location"
+              label="Location"
+              type="text"
+              onChange={event=>setEventInstance(prevState => ({
+                ...prevState,
+                location: event.target.value
+              }))}
+              defaultValue={eventInstance.location}
+              fullWidth
+              required
+            />
+
+            <TextField
+              autoFocus
+              margin="dense"
+              id="vacancy"
+              label="Vacancy"
+              type="number"
+              onChange={event=>setEventInstance(prevState => ({
+                ...prevState,
+                vacancy: Number.parseInt(event.target.value)
+              }))}
+              defaultValue={eventInstance.vacancy}
+              fullWidth
+              required
+            />
+
+            <TextField
+              autoFocus
+              margin="dense"
               id="fee"
               label="Fee"
               type="number"
@@ -116,6 +146,20 @@ const UpdateEventInstanceModal = (props: IProps) => {
               defaultValue={eventInstance.fee}
               fullWidth
               required
+            />
+            <FormControlLabel
+              control={
+                <Switch 
+                  checked={eventInstance.isCompleted}
+                  onChange={event=>setEventInstance(prevState => ({
+                    ...prevState,
+                    isCompleted: event.target.checked
+                  }))}
+                  name="isCompleted" 
+                />
+              }
+              labelPlacement="start"
+              label="Event Instance has completed"
             />
             {eventInstance.dates.map((date, index) => {
               return (

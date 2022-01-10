@@ -51,7 +51,7 @@ const PendingApplicationRow = (props: IProps) => {
       username: props.application.user.username,
       eventInstanceCode: props.application.eventInstance.eventInstanceCode,
       role: props.application.role,
-      status: enrollmentStatus.ENROLLED
+      status: enrollmentStatus.AWAITING_PAYMENT
     }
     await ApiService.updateEnrollment(data)
     window.location.reload();

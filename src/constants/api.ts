@@ -10,7 +10,8 @@ interface EnrollmentStatus {
     PENDING: number,
     ENROLLED: number,
     REJECTED: number,
-    WITHDRAW: number
+    WITHDRAW: number,
+    AWAITING_PAYMENT: number
 }
 
 export const eventRole: EventRole = {
@@ -25,5 +26,6 @@ export const enrollmentStatus: EnrollmentStatus = {
     PENDING: 1,
     ENROLLED: 2,
     REJECTED: 3,
-    WITHDRAW: 4
+    WITHDRAW: 4,
+    AWAITING_PAYMENT:5
 }
